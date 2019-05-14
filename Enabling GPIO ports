@@ -1,1 +1,19 @@
+// Headerfile TIVA
+#include "inc/tm4c1294ncpdt.h"
+#include <stdio.h>
 
+void main(void)
+{
+        unsigned char c; // auxilary short input
+        SYSCTL_RCGCGPIO_R |= 0x00000008; // clock enable port D
+
+        while((SYSCTL_PRGPIO_R & 0x00000008) == 0); // check when port D available
+
+        GPIO_PORTD_AHB_DEN_R = 0x31; // enable digital I/O pins PD4, PD5 and PD0
+        GPIO_PORTD_AHB_DIR_R = 0x30; // define output direction for I/O pins PD5 to PD4
+        while(1)
+        {
+        c = GPIO_PORTD_AHB_DATA_R; // Read Port D complete
+        \\Do something with it here..
+        }
+}
